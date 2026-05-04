@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>感染性废弃物处理记录</title>
+<style>
+  body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; margin: 0; padding: 24px; background: #f7f7f7; }
+  h1 { text-align: center; margin: 0 0 16px; }
+  .controls { text-align: center; margin: 16px 0 24px; }
+  button { padding: 10px 22px; font-size: 16px; cursor: pointer; border: 1px solid #888; background: #fff; border-radius: 4px; }
+  button:hover { background: #eee; }
+  table { border-collapse: collapse; margin: 0 auto; background: #fff; }
+  td { border: 1px solid #444; padding: 14px 28px; text-align: center; font-size: 18px; min-width: 110px; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+  <h1>感染性废弃物处理记录</h1>
+  <div class="controls">
+    <button onclick="generate()">重新生成</button>
+  </div>
+  <table>
+    <tr><td id="r1c1"></td><td id="r1c2"></td><td id="r1c3"></td><td id="r1c4"></td></tr>
+    <tr><td id="r2c1"></td><td id="r2c2"></td><td id="r2c3"></td><td id="r2c4"></td></tr>
+    <tr><td id="r3c1"></td><td id="r3c2"></td><td id="r3c3"></td><td id="r3c4"></td></tr>
+    <tr><td id="r4c1"></td><td id="r4c2"></td><td id="r4c3"></td><td id="r4c4"></td></tr>
+  </table>
+
+<script>
+function randFloat(min, max, decimals) {
+  return (Math.random() * (max - min) + min).toFixed(decimals);
+}
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function fmt(totalMin) {
+  totalMin = ((totalMin % 1440) + 1440) % 1440;
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+
+function generate() {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('r1c' + i).textContent = randFloat(3.60, 4.40, 2);
+  }
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('r2c' + i).textContent = randFloat(0.105, 0.115, 3);
+  }
+
+  // 第三排第一行：09:10 - 09:40 随机
+  const r3c1 = 9 * 60 + 10 + randInt(0, 30);
+  // 第四排第一行 = 第三排第一行 + 2h05m ± 10min
+  const r4c1 = r3c1 + 125 + randInt(-10, 10);
+  // 第三排第二行 = 第四排第一行 + 25min ± 10min
+  const r3c2 = r4c1 + 25 + randInt(-10, 10);
+  // 第四排第二行 = 第三排第二行 + 2h05m ± 10min
+  const r4c2 = r3c2 + 125 + randInt(-10, 10);
+  // 第三排第三行 = 第四排第二行 + 25min ± 10min
+  const r3c3 = r4c2 + 25 + randInt(-10, 10);
+  // 第四排第三行 = 第三排第三行 + 2h05m ± 10min
+  const r4c3 = r3c3 + 125 + randInt(-10, 10);
+  // 第三排第四行 = 第四排第三行 + 25min ± 10min
+  const r3c4 = r4c3 + 25 + randInt(-10, 10);
+  // 第四排第四行 = 第三排第四行 + 2h05m ± 10min
+  const r4c4 = r3c4 + 125 + randInt(-10, 10);
+
+  document.getElementById('r3c1').textContent = fmt(r3c1);
+  document.getElementById('r3c2').textContent = fmt(r3c2);
+  document.getElementById('r3c3').textContent = fmt(r3c3);
+  document.getElementById('r3c4').textContent = fmt(r3c4);
+  document.getElementById('r4c1').textContent = fmt(r4c1);
+  document.getElementById('r4c2').textContent = fmt(r4c2);
+  document.getElementById('r4c3').textContent = fmt(r4c3);
+  document.getElementById('r4c4').textContent = fmt(r4c4);
+}
+
+generate();
+</script>
+</body>
+</html>
