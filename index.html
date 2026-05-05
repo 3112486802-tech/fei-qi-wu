@@ -5,26 +5,103 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>感染性废弃物处理记录</title>
 <style>
-  body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; margin: 0; padding: 24px; background: #f7f7f7; }
-  h1 { text-align: center; margin: 0 0 16px; }
-  .controls { text-align: center; margin: 16px 0 24px; }
-  button { padding: 10px 22px; font-size: 16px; cursor: pointer; border: 1px solid #888; background: #fff; border-radius: 4px; }
-  button:hover { background: #eee; }
-  table { border-collapse: collapse; margin: 0 auto; background: #fff; }
-  td { border: 1px solid #444; padding: 14px 28px; text-align: center; font-size: 18px; min-width: 110px; font-variant-numeric: tabular-nums; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #eef1f6;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    padding: 36px 40px 32px;
+    width: 100%;
+    max-width: 680px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 20px;
+    color: #1a237e;
+    letter-spacing: 3px;
+    margin-bottom: 28px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead tr { background: #1a237e; }
+  th {
+    color: #fff;
+    padding: 13px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border: 1px solid #283593;
+  }
+  tbody tr:nth-child(odd)  { background: #fff; }
+  tbody tr:nth-child(even) { background: #f3f6fc; }
+  tbody tr:hover { background: #e8edf8; }
+  td {
+    border: 1px solid #dde3f0;
+    padding: 14px 10px;
+    text-align: center;
+    font-size: 17px;
+    color: #222;
+    font-variant-numeric: tabular-nums;
+  }
+  td:first-child {
+    color: #1a237e;
+    font-weight: 700;
+    font-size: 15px;
+    width: 52px;
+  }
+  .controls {
+    text-align: center;
+    margin-top: 24px;
+  }
+  button {
+    padding: 10px 36px;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    background: #1a237e;
+    color: #fff;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    transition: background 0.15s;
+  }
+  button:hover { background: #283593; }
 </style>
 </head>
 <body>
+<div class="card">
   <h1>感染性废弃物处理记录</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th>重量（kg）</th>
+        <th>浓度</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td id="r1c1"></td><td id="r1c2"></td><td id="r1c3"></td><td id="r1c4"></td></tr>
+      <tr><td>2</td><td id="r2c1"></td><td id="r2c2"></td><td id="r2c3"></td><td id="r2c4"></td></tr>
+      <tr><td>3</td><td id="r3c1"></td><td id="r3c2"></td><td id="r3c3"></td><td id="r3c4"></td></tr>
+      <tr><td>4</td><td id="r4c1"></td><td id="r4c2"></td><td id="r4c3"></td><td id="r4c4"></td></tr>
+    </tbody>
+  </table>
   <div class="controls">
     <button onclick="generate()">重新生成</button>
   </div>
-  <table>
-    <tr><td id="r1c1"></td><td id="r1c2"></td><td id="r1c3"></td><td id="r1c4"></td></tr>
-    <tr><td id="r2c1"></td><td id="r2c2"></td><td id="r2c3"></td><td id="r2c4"></td></tr>
-    <tr><td id="r3c1"></td><td id="r3c2"></td><td id="r3c3"></td><td id="r3c4"></td></tr>
-    <tr><td id="r4c1"></td><td id="r4c2"></td><td id="r4c3"></td><td id="r4c4"></td></tr>
-  </table>
+</div>
 
 <script>
 function randFloat(min, max, decimals) {
@@ -41,38 +118,25 @@ function fmt(totalMin) {
 }
 
 function generate() {
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('r1c' + i).textContent = randFloat(3.60, 4.40, 2);
-  }
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById('r2c' + i).textContent = randFloat(0.105, 0.115, 3);
-  }
+  // 第1条记录起始时间：09:10 - 09:40
+  const s1 = 9 * 60 + 10 + randInt(0, 30);
+  const e1 = s1 + 125 + randInt(-10, 10);
+  const s2 = e1 + 25 + randInt(-10, 10);
+  const e2 = s2 + 125 + randInt(-10, 10);
+  const s3 = e2 + 25 + randInt(-10, 10);
+  const e3 = s3 + 125 + randInt(-10, 10);
+  const s4 = e3 + 25 + randInt(-10, 10);
+  const e4 = s4 + 125 + randInt(-10, 10);
 
-  // 第三排第一行：09:10 - 09:40 随机
-  const r3c1 = 9 * 60 + 10 + randInt(0, 30);
-  // 第四排第一行 = 第三排第一行 + 2h05m ± 10min
-  const r4c1 = r3c1 + 125 + randInt(-10, 10);
-  // 第三排第二行 = 第四排第一行 + 25min ± 10min
-  const r3c2 = r4c1 + 25 + randInt(-10, 10);
-  // 第四排第二行 = 第三排第二行 + 2h05m ± 10min
-  const r4c2 = r3c2 + 125 + randInt(-10, 10);
-  // 第三排第三行 = 第四排第二行 + 25min ± 10min
-  const r3c3 = r4c2 + 25 + randInt(-10, 10);
-  // 第四排第三行 = 第三排第三行 + 2h05m ± 10min
-  const r4c3 = r3c3 + 125 + randInt(-10, 10);
-  // 第三排第四行 = 第四排第三行 + 25min ± 10min
-  const r3c4 = r4c3 + 25 + randInt(-10, 10);
-  // 第四排第四行 = 第三排第四行 + 2h05m ± 10min
-  const r4c4 = r3c4 + 125 + randInt(-10, 10);
+  const starts = [s1, s2, s3, s4];
+  const ends   = [e1, e2, e3, e4];
 
-  document.getElementById('r3c1').textContent = fmt(r3c1);
-  document.getElementById('r3c2').textContent = fmt(r3c2);
-  document.getElementById('r3c3').textContent = fmt(r3c3);
-  document.getElementById('r3c4').textContent = fmt(r3c4);
-  document.getElementById('r4c1').textContent = fmt(r4c1);
-  document.getElementById('r4c2').textContent = fmt(r4c2);
-  document.getElementById('r4c3').textContent = fmt(r4c3);
-  document.getElementById('r4c4').textContent = fmt(r4c4);
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('r' + i + 'c1').textContent = randFloat(3.60, 4.40, 2);
+    document.getElementById('r' + i + 'c2').textContent = randFloat(0.105, 0.115, 3);
+    document.getElementById('r' + i + 'c3').textContent = fmt(starts[i - 1]);
+    document.getElementById('r' + i + 'c4').textContent = fmt(ends[i - 1]);
+  }
 }
 
 generate();
