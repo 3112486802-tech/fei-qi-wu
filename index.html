@@ -49,16 +49,14 @@
     box-shadow:
       0 1px 3px rgba(0,0,0,0.06),
       0 8px 32px rgba(0,0,0,0.08);
-    overflow-x: auto;
     width: 100%;
     max-width: 720px;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 480px;
   }
 
   thead tr {
@@ -67,16 +65,16 @@
 
   th {
     color: #f0ede8;
-    padding: 14px 16px;
-    font-size: 12px;
+    padding: 12px 8px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
     text-align: center;
     border: none;
-    white-space: nowrap;
+    line-height: 1.4;
   }
 
-  th:first-child { text-align: center; width: 52px; }
+  th:first-child { width: 36px; }
 
   tbody tr {
     border-bottom: 1px solid #f0ede8;
@@ -88,29 +86,19 @@
   tbody tr:hover { background: #faf8f5; }
 
   td {
-    padding: 16px;
+    padding: 13px 8px;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
     color: #1a1a1a;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 0.01em;
     white-space: nowrap;
   }
 
   td:first-child {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: #999;
-    letter-spacing: 0.06em;
-  }
-
-  @media (max-width: 480px) {
-    body { padding: 32px 12px; }
-    h1 { font-size: 22px; }
-    .card { border-radius: 12px; }
-    th { padding: 12px 14px; font-size: 11px; }
-    td { padding: 14px; font-size: 14px; }
-    .controls { padding: 20px; }
+    letter-spacing: 0.04em;
   }
 
   .controls {
