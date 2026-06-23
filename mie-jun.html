@@ -5,69 +5,217 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>灭菌锅时间计算器</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    background: #0f0f0f;
+    font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f9f7f4;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-    color: #e0e0e0;
+    padding: 32px 10px;
+    color: #1a1a1a;
   }
+
   @keyframes fadeSlide {
     from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    to   { opacity: 1; transform: translateY(0); }
   }
-  .wrap { width: 400px; padding: 32px; }
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c96442;
+    margin-bottom: 12px;
+  }
+
   h1 {
-    font-size: 13px; font-weight: 400; letter-spacing: 6px;
-    text-transform: uppercase; color: #555; margin-bottom: 36px; text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #1a1a1a;
+    line-height: 1.3;
   }
-  .clock { display: flex; align-items: center; justify-content: center; margin-bottom: 28px; }
-  .box {
-    width: 72px; height: 88px; background: #161616; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center; border: 1px solid #222;
+
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+      0 1px 3px rgba(0,0,0,0.06),
+      0 8px 32px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 720px;
+    overflow: hidden;
   }
-  .box span { font-size: 36px; font-weight: 600; color: #fff; letter-spacing: 4px; }
-  .colon { font-size: 40px; font-weight: 700; color: #333; margin: 0 14px; user-select: none; }
-  .hint { text-align: center; font-size: 11px; color: #333; margin: 0 0 20px; letter-spacing: 1px; }
-  .btn-wrap { text-align: center; margin-bottom: 8px; }
-  button {
-    background: #4a9eff; border: none; border-radius: 10px; padding: 12px 52px;
-    font-size: 14px; color: #fff; font-family: inherit; cursor: pointer;
-    font-weight: 600; letter-spacing: 2px; transition: background 0.15s, transform 0.05s;
+
+  .start-bar {
+    background: #1a1a1a;
+    color: #f0ede8;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
   }
-  button:hover { background: #3a8eef; }
-  button:active { transform: scale(0.97); }
-  .row {
-    display: flex; align-items: center; justify-content: center; padding: 15px 0;
+
+  .start-bar .label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8a8580;
+  }
+
+  .start-bar .time {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    background: #1a1a1a;
+  }
+
+  th {
+    color: #f0ede8;
+    padding: 10px 4px;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-align: center;
+    border: none;
+    white-space: nowrap;
+  }
+
+  th:first-child { width: 28px; }
+
+  tbody tr {
+    border-bottom: 1px solid #f0ede8;
+    transition: background 0.15s;
     animation: fadeSlide 0.35s ease both;
   }
-  .row:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,0.04); }
-  .row .left { font-size: 26px; font-weight: 500; color: #fff; width: 95px; text-align: right; letter-spacing: 3px; }
-  .row .dash { margin: 0 18px; color: #2a2a2a; font-size: 16px; }
-  .row .right { font-size: 26px; font-weight: 500; color: #4a9eff; width: 95px; text-align: left; letter-spacing: 3px; }
-  .note {
-    margin-top: 24px; padding: 12px 14px; background: #131313;
-    border-radius: 8px; font-size: 11px; color: #3a3a3a; line-height: 1.9;
+
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #faf8f5; }
+
+  td {
+    padding: 13px 6px;
+    text-align: center;
+    font-size: 13px;
+    color: #1a1a1a;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
-  .note p { margin: 0; }
+
+  td:first-child {
+    font-size: 11px;
+    font-weight: 600;
+    color: #999;
+  }
+
+  .hint {
+    padding: 14px 24px;
+    font-size: 11px;
+    color: #8a8580;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    background: #faf8f5;
+    border-top: 1px solid #f0ede8;
+  }
+
+  .hint p { margin: 0; }
+
+  .controls {
+    padding: 28px;
+    text-align: center;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border: 1.5px solid #1a1a1a;
+    background: #1a1a1a;
+    color: #f0ede8;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    font-family: inherit;
+  }
+
+  button:hover {
+    background: #333;
+    border-color: #333;
+  }
+
+  button svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
+
+<header>
+  <p class="eyebrow">灭菌流程</p>
   <h1>时间计算器</h1>
-  <div class="clock">
-    <div class="box"><span id="display-hour">09</span></div>
-    <span class="colon">:</span>
-    <div class="box"><span id="display-min">30</span></div>
+</header>
+
+<div class="card">
+  <div class="start-bar">
+    <span class="label">起始时间</span>
+    <span class="time"><span id="display-hour">09</span>:<span id="display-min">30</span></span>
   </div>
-  <p class="hint">小时 9→10→11 自动循环 · 分钟 25~45 自动随机</p>
-  <div class="btn-wrap">
-    <button id="calc-btn">计算</button>
+  <table>
+    <thead>
+      <tr>
+        <th>序号</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="hint">
+    <p>起始: 小时 9→10→11 循环, 分钟 25~45 随机</p>
+    <p>结束时间 = 开始时间 + 随机(2h00m ~ 2h10m)</p>
+    <p>下行开始时间 = 上行结束时间 + 随机(20m ~ 35m)</p>
   </div>
-  <div id="result"></div>
+</div>
+
+<div class="controls">
+  <button id="calc-btn">
+    <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></svg>
+    计算
+  </button>
 </div>
 
 <script>
@@ -102,7 +250,7 @@ function generate(startH, startM) {
 var nextIdx = 0;
 var displayHourEl = document.getElementById("display-hour");
 var displayMinEl = document.getElementById("display-min");
-var resultEl = document.getElementById("result");
+var rowsEl = document.getElementById("rows");
 
 function calc() {
   var curHour = hourCycle[nextIdx];
@@ -112,46 +260,22 @@ function calc() {
 
   var rows = generate(curHour, curMin);
 
-  resultEl.innerHTML = "";
-  var container = document.createElement("div");
-  container.style.marginTop = "30px";
-
+  rowsEl.innerHTML = "";
   rows.forEach(function (r, i) {
-    var row = document.createElement("div");
-    row.className = "row";
-    row.style.animationDelay = (i * 0.07) + "s";
-
-    var left = document.createElement("span");
-    left.className = "left";
-    left.textContent = r.left;
-
-    var dash = document.createElement("span");
-    dash.className = "dash";
-    dash.textContent = "—";
-
-    var right = document.createElement("span");
-    right.className = "right";
-    right.textContent = r.right;
-
-    row.appendChild(left);
-    row.appendChild(dash);
-    row.appendChild(right);
-    container.appendChild(row);
+    var tr = document.createElement("tr");
+    tr.style.animationDelay = (i * 0.07) + "s";
+    tr.innerHTML =
+      "<td>" + pad(i + 1) + "</td>" +
+      "<td>" + r.left + "</td>" +
+      "<td>" + r.right + "</td>";
+    rowsEl.appendChild(tr);
   });
 
-  var note = document.createElement("div");
-  note.className = "note";
-  note.innerHTML =
-    "<p>起始: 小时 9→10→11 循环, 分钟 25~45 随机</p>" +
-    "<p>右列 = 左列 + 随机(2h00m ~ 2h10m)</p>" +
-    "<p>下行左列 = 上行右列 + 随机(20m ~ 35m)</p>";
-  container.appendChild(note);
-
-  resultEl.appendChild(container);
   nextIdx = (nextIdx + 1) % hourCycle.length;
 }
 
 document.getElementById("calc-btn").addEventListener("click", calc);
+calc();
 </script>
 </body>
 </html>
