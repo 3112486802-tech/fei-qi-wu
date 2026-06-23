@@ -152,7 +152,9 @@
     z-index: 1000;
     appearance: none;
     margin: 0;
-    padding: 2px;
+    padding: 3px;
+    width: 84px;
+    height: 52px;
     border: 1.5px solid #1a1a1a;
     background: #ffffff;
     color: #1a1a1a;
@@ -167,28 +169,32 @@
   .switcher::before {
     content: '';
     position: absolute;
-    top: 2px;
-    bottom: 2px;
-    left: 2px;
-    width: calc(50% - 2px);
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
     background: #1a1a1a;
-    border-radius: 999px;
-    transition: transform 0.25s cubic-bezier(.4, 0, .2, 1);
+    border-radius: 999px 0 0 999px;
+    transition: transform 0.25s cubic-bezier(.4, 0, .2, 1),
+                border-radius 0.25s cubic-bezier(.4, 0, .2, 1);
   }
-  .switcher.is-liang::before { transform: translateX(100%); }
+  .switcher.is-liang::before {
+    transform: translateX(100%);
+    border-radius: 0 999px 999px 0;
+  }
   .switcher .lbl {
     position: relative;
     z-index: 1;
     flex: 1;
-    min-width: 36px;
-    padding: 4px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.06em;
-    line-height: 1.4;
+    line-height: 1;
     color: #1a1a1a;
     transition: color 0.2s;
-    text-align: center;
   }
   .switcher.is-zheng .lbl-zheng,
   .switcher.is-liang .lbl-liang { color: #f0ede8; }
