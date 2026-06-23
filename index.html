@@ -137,9 +137,63 @@
     stroke-linejoin: round;
     flex-shrink: 0;
   }
+
+  .switcher {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: inline-flex;
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+  }
+  .switcher .seg {
+    appearance: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #888;
+    padding: 6px 24px;
+    border-radius: 999px;
+    line-height: 1.4;
+    transition: background 0.15s, color 0.15s;
+  }
+  .switcher .seg:hover { color: #1a1a1a; background: transparent; border: none; }
+  .switcher .seg.active { background: #1a1a1a; color: #f0ede8; }
+  .switcher .seg.active:hover { background: #333; color: #f0ede8; }
+
+  .liang-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    background: #0f0f0f;
+  }
+  .liang-overlay iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
 </style>
 </head>
 <body>
+
+<div class="switcher" role="tablist" aria-label="郑 / 梁 切换">
+  <button id="tab-zheng" class="seg active" role="tab" aria-selected="true" onclick="showView('zheng')">郑</button>
+  <button id="tab-liang" class="seg" role="tab" aria-selected="false" onclick="showView('liang')">梁</button>
+</div>
+
+<div id="view-liang" class="liang-overlay" hidden>
+  <iframe id="liang-frame" data-src="mie-jun.html" title="灭菌锅时间计算器"></iframe>
+</div>
 
 <header>
   <p class="eyebrow">医疗废物管理</p>
@@ -209,6 +263,23 @@ function generate() {
 }
 
 generate();
+
+function showView(which) {
+  var liang = document.getElementById('view-liang');
+  var tabZheng = document.getElementById('tab-zheng');
+  var tabLiang = document.getElementById('tab-liang');
+  if (which === 'liang') {
+    var frame = document.getElementById('liang-frame');
+    if (!frame.getAttribute('src')) { frame.setAttribute('src', frame.dataset.src); }
+    liang.hidden = false;
+    tabLiang.classList.add('active');  tabLiang.setAttribute('aria-selected', 'true');
+    tabZheng.classList.remove('active'); tabZheng.setAttribute('aria-selected', 'false');
+  } else {
+    liang.hidden = true;
+    tabZheng.classList.add('active');  tabZheng.setAttribute('aria-selected', 'true');
+    tabLiang.classList.remove('active'); tabLiang.setAttribute('aria-selected', 'false');
+  }
+}
 </script>
 </body>
 </html>
