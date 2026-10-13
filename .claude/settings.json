@@ -1,0 +1,19 @@
+{
+  "enabledPlugins": {
+    "cc-plugin-you-should-know@builtin": true,
+    "mindful-claude@mindful-claude": true,
+    "cache-tax@claude-code-mods": true,
+    "filetree@claude-code-filetree": true
+  },
+  "extraKnownMarketplaces": {
+    "mindful-claude": {
+      "source": { "source": "github", "repo": "halluton/Mindful-Claude" }
+    },
+    "claude-code-mods": {
+      "source": { "source": "github", "repo": "karanb192/claude-code-mods" }
+    },
+    "claude-code-filetree": {
+      "source": { "source": "github", "repo": "data-goblin/claude-code-filetree" }
+    }
+  }
+}
